@@ -1,9 +1,12 @@
 package com.egg.libreriaapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "autores")
@@ -22,4 +25,9 @@ public class Autor {
 
     @Column(name = "nombre_autor")
     private String nombreAutor;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "autor", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Libro> libros;
+
 }

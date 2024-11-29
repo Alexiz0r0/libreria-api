@@ -25,11 +25,11 @@ public class Libro {
     @Column(name = "titulo")
     private String titulo;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_autor")
     private Autor autor;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_editorial")
     private Editorial editorial;
 }

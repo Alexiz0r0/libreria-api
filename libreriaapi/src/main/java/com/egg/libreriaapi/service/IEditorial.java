@@ -12,7 +12,7 @@ public interface IEditorial {
 
     Editorial encontrarPorId(String id);
 
-    void eliminar(Editorial editorial);
+    void eliminar(String id);
 
     Editorial editar(Editorial editorial);
 }
