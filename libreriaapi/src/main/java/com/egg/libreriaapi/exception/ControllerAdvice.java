@@ -17,4 +17,14 @@ public class ControllerAdvice {
                 .build();
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+
+    @ExceptionHandler(value = BadRequestException.class)
+    public ResponseEntity<ErrorDto> badRequestxceptionHandler(BadRequestException ex) {
+        ErrorDto error = ErrorDto.builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }
