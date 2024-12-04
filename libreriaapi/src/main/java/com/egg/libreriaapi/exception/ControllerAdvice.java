@@ -27,4 +27,13 @@ public class ControllerAdvice {
                 .build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = FieldInvalidException.class)
+    public ResponseEntity<ErrorDto> fieldInvalidExceptionHandler(FieldInvalidException ex) {
+        ErrorDto error = ErrorDto.builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }

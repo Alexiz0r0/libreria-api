@@ -1,5 +1,6 @@
 package com.egg.libreriaapi.service;
 
+import com.egg.libreriaapi.model.dto.MessageDto;
 import com.egg.libreriaapi.model.request.AutorEditReq;
 import com.egg.libreriaapi.model.request.AutorReq;
 import com.egg.libreriaapi.model.response.AutorResp;
@@ -14,7 +15,9 @@ public interface IAutor {
 
     AutorResp encontrarPorId(String id);
 
-    void eliminar(String id);
+    MessageDto eliminar(String id);
 
     AutorResp editar(AutorEditReq autor);
+
+    List<AutorResp> buscarPorNombre(String name);
 }

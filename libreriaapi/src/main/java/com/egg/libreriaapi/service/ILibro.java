@@ -1,19 +1,25 @@
 package com.egg.libreriaapi.service;
 
-import com.egg.libreriaapi.entity.Libro;
+import com.egg.libreriaapi.model.dto.MessageDto;
+import com.egg.libreriaapi.model.request.LibroEditReq;
+import com.egg.libreriaapi.model.request.LibroReq;
+import com.egg.libreriaapi.model.response.LibroResp;
 
 import java.util.List;
 
 public interface ILibro {
 
 
-    List<Libro> listarTodos();
+    List<LibroResp> listarTodos();
 
-    Libro agregar(Libro libro);
+    LibroResp agregar(LibroReq libro);
 
-    Libro encontrarPorId(String id);
+    LibroResp encontrarPorId(Integer id);
 
-    void eliminar(Libro libro);
+    MessageDto eliminar(Integer id);
 
-    Libro editar(Libro libro);
+    LibroResp editar(LibroEditReq libro);
+
+    List<LibroResp> listarLibrosActivos();
+
 }

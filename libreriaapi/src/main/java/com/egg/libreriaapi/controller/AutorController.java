@@ -1,5 +1,6 @@
 package com.egg.libreriaapi.controller;
 
+import com.egg.libreriaapi.model.dto.MessageDto;
 import com.egg.libreriaapi.model.request.AutorEditReq;
 import com.egg.libreriaapi.model.request.AutorReq;
 import com.egg.libreriaapi.model.response.AutorResp;
@@ -38,7 +39,13 @@ public class AutorController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAutor(@PathVariable String id) {
-        autorService.eliminar(id);
+    public MessageDto deleteAutor(@PathVariable String id) {
+        return autorService.eliminar(id);
     }
+
+    @GetMapping("/search/{name}")
+    public List<AutorResp> getAutorPorNombre(@PathVariable String name) {
+        return autorService.buscarPorNombre(name);
+    }
+
 }

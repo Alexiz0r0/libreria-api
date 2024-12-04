@@ -1,18 +1,23 @@
 package com.egg.libreriaapi.service;
 
-import com.egg.libreriaapi.entity.Editorial;
+import com.egg.libreriaapi.model.dto.MessageDto;
+import com.egg.libreriaapi.model.request.EditorialEditReq;
+import com.egg.libreriaapi.model.request.EditorialReq;
+import com.egg.libreriaapi.model.response.EditorialResp;
 
 import java.util.List;
 
 public interface IEditorial {
 
-    List<Editorial> listarTodos();
+    List<EditorialResp> listarTodos();
 
-    Editorial agregar(Editorial editorial);
+    EditorialResp agregar(EditorialReq editorial);
 
-    Editorial encontrarPorId(String id);
+    EditorialResp encontrarPorId(String id);
 
-    void eliminar(String id);
+    MessageDto eliminar(String id);
 
-    Editorial editar(Editorial editorial);
+    EditorialResp editar(EditorialEditReq editorial);
+
+    List<EditorialResp> buscarPorNombre(String name);
 }

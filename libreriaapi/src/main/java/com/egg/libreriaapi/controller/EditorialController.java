@@ -1,6 +1,9 @@
 package com.egg.libreriaapi.controller;
 
-import com.egg.libreriaapi.entity.Editorial;
+import com.egg.libreriaapi.model.dto.MessageDto;
+import com.egg.libreriaapi.model.request.EditorialEditReq;
+import com.egg.libreriaapi.model.request.EditorialReq;
+import com.egg.libreriaapi.model.response.EditorialResp;
 import com.egg.libreriaapi.service.IEditorial;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,27 +19,32 @@ public class EditorialController {
     private final IEditorial editorialService;
 
     @PostMapping
-    public Editorial saveEditorial(@RequestBody Editorial editorial) {
+    public EditorialResp saveEditorial(@RequestBody EditorialReq editorial) {
         return editorialService.agregar(editorial);
     }
 
     @GetMapping("/{id}")
-    public Editorial findEditorialById(@PathVariable String id) {
+    public EditorialResp findEditorialById(@PathVariable String id) {
         return editorialService.encontrarPorId(id);
     }
 
     @PutMapping
-    public Editorial editarEditorial(@RequestBody Editorial editorial) {
+    public EditorialResp editarEditorial(@RequestBody EditorialEditReq editorial) {
         return editorialService.editar(editorial);
     }
 
     @GetMapping
-    public List<Editorial> getAllEditorial() {
+    public List<EditorialResp> getAllEditorial() {
         return editorialService.listarTodos();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAutor(@PathVariable String id) {
-        editorialService.eliminar(id);
+    public MessageDto deleteAutor(@PathVariable String id) {
+        return editorialService.eliminar(id);
+    }
+
+    @GetMapping("/search/{name}")
+    public List<EditorialResp> getEditorialPorNombre(@PathVariable String name) {
+        return editorialService.buscarPorNombre(name);
     }
 }

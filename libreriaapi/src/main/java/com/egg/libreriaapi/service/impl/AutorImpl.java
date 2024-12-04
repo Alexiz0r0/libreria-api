@@ -4,6 +4,7 @@ import com.egg.libreriaapi.entity.Autor;
 import com.egg.libreriaapi.exception.BadRequestException;
 import com.egg.libreriaapi.exception.ResourceNotFoundException;
 import com.egg.libreriaapi.model.dao.AutorDao;
+import com.egg.libreriaapi.model.dto.MessageDto;
 import com.egg.libreriaapi.model.request.AutorEditReq;
 import com.egg.libreriaapi.model.request.AutorReq;
 import com.egg.libreriaapi.model.response.AutorResp;
@@ -32,8 +33,8 @@ public class AutorImpl implements IAutor {
 
     @Override
     public AutorResp agregar(AutorReq autor) {
-        Autor autor1 = autorDao.save(generateAutor(autor));
         validateNombreReq(autor.getName());
+        Autor autor1 = autorDao.save(generateAutor(autor));
         return generateAutorResp(autor1);
     }
 
@@ -45,10 +46,14 @@ public class AutorImpl implements IAutor {
     }
 
     @Override
-    public void eliminar(String id) {
+    public MessageDto eliminar(String id) {
         Autor autor = autorDao.findById(id).orElse(null);
         isAutorPresent(autor);
         autorDao.delete(autor);
+        return MessageDto.builder()
+                .msg("Recurso eliminado")
+                .code("E-500")
+                .build();
     }
 
     @Override
@@ -60,6 +65,18 @@ public class AutorImpl implements IAutor {
         autor1.setAutorActivo(autor.getActive());
         return generateAutorResp(autorDao.save(autor1));
     }
+
+    @Override
+    public List<AutorResp> buscarPorNombre(String name) {
+        validateArgument(name);
+        List<AutorResp> resps = new ArrayList<>();
+        List<Autor> autors = autorDao.buscarPorNombre(name);
+        for (Autor autor : autors) {
+            resps.add(generateAutorResp(autor));
+        }
+        return resps;
+    }
+
 
     private void isAutorPresent(Autor autor) {
         if (autor == null) {
@@ -85,6 +102,12 @@ public class AutorImpl implements IAutor {
     private void validateNombreReq(String name) {
         if (name.trim().equals("") || name == null) {
             throw new BadRequestException("Nombre es obligatorio", "A-200");
+        }
+    }
+
+    private void validateArgument(String name) {
+        if (name == null || name.length() > 50) {
+            throw new BadRequestException("El parametro proporcionado no es válido.", "A-300");
         }
     }
 }
